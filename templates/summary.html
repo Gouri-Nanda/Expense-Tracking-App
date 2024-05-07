@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker Summary</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <style>
+        /* Custom color palette */
+        :root {
+            --main-bg-color: #f8f9fa; /* Light grey */
+            --navbar-bg-color: #03350d; /* Dark green */
+            --navbar-text-color: #ffffff; /* White */
+            --table-bg-color: #ffffff; /* White */
+            --table-header-bg-color: #f3f3f3; /* Light grey */
+            --table-text-color: #000000; /* Black */
+        }
+
+        /* Body styles */
+        body {
+            background-color: var(--main-bg-color);
+            padding-top: 56px; /* Adjusted padding to account for fixed navbar */
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: var(--navbar-bg-color);
+            color: var(--navbar-text-color);
+        }
+
+        /* Table styles */
+        table {
+            background-color: var(--table-bg-color);
+        }
+
+        th,
+        td {
+            text-align: center;
+            background-color: var(--table-header-bg-color); /* Set background color for table header */
+            color: var(--table-text-color);
+        }
+
+        /* Button styles */
+        .btn-link {
+            color: var(--navbar-bg-color); /* Dark green */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">EXPENSE TRACKER</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">EXPENSE TRACKER</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'credit_info' %}">Credits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'debit_info' %}">Debits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_credit_item' %}">Add Credit Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_debit_item' %}">Add Debit Item</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'summary' %}">Expense Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'edit_user_profile' %}">User Profile</a>
+                    </li>
+                    
+                </ul>
+              </div>
+            </div>
+          </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Expense Tracker Summary</h1>
+
+        <h2>Total Money Spent per Category</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Total Spent</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category, total_spent in total_spent_per_category.items %}
+                    <tr>
+                        <td>{{ category }}</td>
+                        <td>{{ total_spent }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Category with Least Amount Spent</h2>
+        <p>Category: {{ min_spent_category }}</p>
+        <p>Total Amount Spent: {{ min_spent_amount }}</p>
+
+        <h2>Category with Highest Amount Spent</h2>
+        <p>Category: {{ max_spent_category }}</p>
+        <p>Total Amount Spent: {{ max_spent_amount }}</p>
+
+        <h2>Total Debit and Credit</h2>
+        <p>Total Debit: {{ total_debit }}</p>
+        <p>Total Credit: {{ total_credit }}</p>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
