@@ -137,7 +137,7 @@ def show_filtered_items(request):
     elif filter_type == 'category' and filter_value:
         filtered_debits = list(db.debit.find({'category': filter_value}))
     else:
-        filtered_debits = []  # Define filtered_debits as an empty list
+        filtered_debits = debits  # Define filtered_debits as an empty list
 
     return render(request, 'debit_info.html', {'filtered_debits': filtered_debits, 'debits': debits})
 
